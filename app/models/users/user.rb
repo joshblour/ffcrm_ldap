@@ -4,7 +4,7 @@ User.class_eval do
       u.set_attributes_from_ldap
       u.save
       return u
-    elsif details = FfcrmLdap::LDAPAccess.get_user_details(username)
+    elsif details = FfcrmLdap::LdapAdapter.get_user_details(username)
       u = self.new(:username => username)
       u.set_attributes_from_ldap( details )
       u.admin = true if self.count == 0
@@ -15,7 +15,7 @@ User.class_eval do
   end
 
   def set_attributes_from_ldap( details = nil )
-    details ||= FfcrmLdap::LDAPAccess.get_user_details(username)
+    details ||= FfcrmLdap::LdapAdapter.get_user_details(username)
     unless details.nil?
       LDAP_ATTRIBUTES_MAP.each do |k,v|
         write_attribute(k, details[v.to_sym])
@@ -27,6 +27,6 @@ User.class_eval do
   protected
 
   def valid_ldap_credentials?(password)
-    FfcrmLdap::LDAPAccess.valid_credentials?(self.username, password)
+    FfcrmLdap::LdapAdapter.valid_credentials?(self.username, password)
   end
 end
