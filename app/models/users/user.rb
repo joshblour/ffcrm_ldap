@@ -27,6 +27,6 @@ User.class_eval do
   protected
 
   def valid_ldap_credentials?(password)
-    FfcrmLdap::LDAPAccess.authenticate(self.username, password)
+    FfcrmLdap::LDAPAccess.valid_credentials?(self.username, password)
   end
 end
