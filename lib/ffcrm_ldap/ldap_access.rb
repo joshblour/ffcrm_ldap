@@ -3,8 +3,11 @@ module FfcrmLdap
   module LdapAdapter
 
     def self.valid_credentials?(login, password_plaintext)
+      puts 'starting validation'
       options = { :login => login, :password => password_plaintext }
       resource = LdapConnect.new(options)
+      puts 'inspect resource'
+      puts resource.inspect
       resource.authorized? ? resource : nil
     end
     
