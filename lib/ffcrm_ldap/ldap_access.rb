@@ -7,8 +7,8 @@ module FfcrmLdap
       def authenticate(uid, password)
         ldap = connect()
         result = ldap.bind_as(
-          :base => Config.search_base,
-          :filter => sprintf(Config.user_filter, uid),
+          :base => Config.base,
+          :login => uid,
           :password => password)
         return !!result
       end
@@ -17,8 +17,7 @@ module FfcrmLdap
         ldap = connect()
 
         results = ldap.search(
-          :base => Config.search_base,
-          :filter => Config.user_filter % uid )
+          :filter => Net::LDAP::Filter.eq(Config.attribute.to_s, uid.to_s) )
         if results and results.size > 0
           details = {}
           results[0].each do |name, values|
@@ -36,11 +35,12 @@ module FfcrmLdap
         return Net::LDAP.new(
           :host => Config.host,
           :port => Config.port,
-          :encryption => Config.ssl ? :simple_tls : nil,
-          :auth => {
-            :method => :simple,
-            :username => Config.bind_dn,
-            :password => Config.bind_passwd }
+          :base => Config.base,
+          :encryption => Config.ssl ? :simple_tls : nil #,
+          # :auth => {
+          #         :method => :simple,
+          #         :username => Config.bind_dn,
+          #         :password => Config.bind_passwd }
           )
       end
     end
