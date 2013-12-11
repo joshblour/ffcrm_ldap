@@ -78,6 +78,7 @@ module FfcrmLdap
 
         results = @ldap.search(
           :filter => Net::LDAP::Filter.eq(@attribute.to_s, @login.to_s)
+          )
         if results and results.size > 0
           details = {}
           results[0].each do |name, values|
