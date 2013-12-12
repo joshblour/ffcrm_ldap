@@ -8,6 +8,7 @@ module FfcrmLdap
       resource = LdapConnect.new(options)
       puts 'inspect resource'
       puts resource.inspect
+      sfdsfsdfsd
       resource.authorized? ? resource : nil
     end
     
