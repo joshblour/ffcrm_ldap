@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
     "Rakefile",
     "Readme.md",
     "VERSION",
-    "app/controllers/application_controller.rb",
     "app/models/users/authentication.rb",
     "app/models/users/user.rb",
     "config/initializers/ldap_attributes_map.rb",
