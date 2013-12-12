@@ -8,11 +8,12 @@ module FfcrmLdap
       resource.authorized? ? resource : nil
     end
     
-    # def self.get_user_details(login)
-    #   options = { :login => login }
-    #   resource = LdapConnect.new(options)
-    #   resource.get_user_details
-    # end
+    ##TODO: DOESNT WORK
+    def self.get_user_details(login)
+      options = { :login => login }
+      resource = LdapConnect.new(options)
+      resource.get_user_details
+    end
     
     class LdapConnect
 
@@ -63,36 +64,39 @@ module FfcrmLdap
         authenticated?
       end
 
-      # def ldap_entry
-      #   search_for_login
-      # end
-      # 
-      # # Searches the LDAP for the login
-      # #
-      # # @return [Object] the LDAP entry found; nil if not found
-      # def search_for_login
-      #   puts("LDAP search for login: #{@attribute}=#{@login}")
-      #   filter = Net::LDAP::Filter.eq(@attribute.to_s, @login.to_s)
-      #   ldap_entry = nil
-      #   @ldap.search(:filter => filter) {|entry| ldap_entry = entry}
-      #   ldap_entry
-      # end
-      # 
-      # def get_user_details
-      #   puts 'getting user details'
-      #   results = @ldap.search(
-      #     :filter => Net::LDAP::Filter.eq(@attribute.to_s, @login.to_s)
-      #     )
-      #   if results and results.size > 0
-      #     details = {}
-      #     results[0].each do |name, values|
-      #       details[name] = values[0].dup
-      #     end
-      #     details
-      #   else
-      #     nil
-      #   end
-      # end
+      def ldap_entry
+        search_for_login
+      end
+      
+      # Searches the LDAP for the login
+      #
+      # @return [Object] the LDAP entry found; nil if not found
+      
+      ##TODO: DOESNT WORK
+      def search_for_login
+        puts("LDAP search for login: #{@attribute}=#{@login}")
+        filter = Net::LDAP::Filter.eq(@attribute.to_s, @login.to_s)
+        ldap_entry = nil
+        @ldap.search(:filter => filter) {|entry| ldap_entry = entry}
+        ldap_entry
+      end
+      
+      ##TODO: DOESNT WORK
+      def get_user_details
+        puts 'getting user details'
+        results = @ldap.search(
+          :filter => Net::LDAP::Filter.eq(@attribute.to_s, @login.to_s)
+          )
+        if results and results.size > 0
+          details = {}
+          results[0].each do |name, values|
+            details[name] = values[0].dup
+          end
+          details
+        else
+          nil
+        end
+      end
 
     end
 
