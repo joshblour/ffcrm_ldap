@@ -1,4 +1,9 @@
 User.class_eval do
+  
+  def self.find_by_username(username)
+    self.where('LOWER(username) = ?', username.downcase).first
+  end
+  
   # def self.update_or_create_from_ldap(username)
   #   if u = find_by_username(username)
   #     u.set_attributes_from_ldap
@@ -22,10 +27,9 @@ User.class_eval do
   #     end
   #   end
   #   self
-  # end
+  # end  
 
-  protected
-
+  
   def valid_ldap_credentials?(password)
     FfcrmLdap::LdapAdapter.valid_ldap_credentials?(self.username, password)
   end
